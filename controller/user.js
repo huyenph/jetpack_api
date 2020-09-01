@@ -1,6 +1,25 @@
 const bcryptjs = require('bcryptjs')
 const { User, createUserSchema, updateUserSchema } = require('../model/user')
 
+const uploadAvatar = async (req, res) => {
+  if (!req.file) {
+    return res.status(400).send({
+      message: 'Need an image for uploading'
+    })
+  }
+  try {
+    const user = await User.findById(req.userId)
+    user.avatar = req.file.path
+    await user.save()
+    res.status(200).send({
+      message: 'Successs',
+      data: user
+    })
+  } catch (error) {
+    res.status(500).send(error)
+  }
+}
+
 const createUser = async (req, res) => {
   try {
     const validationResult = createUserSchema.validate(req.body)
@@ -127,5 +146,6 @@ module.exports = {
   getUsers,
   deleteUserById,
   updateUserById,
+  uploadAvatar,
 }
 

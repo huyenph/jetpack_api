@@ -18,8 +18,11 @@ const authenticate = async (req, res, next) => {
 		req.userEmail = existedUser.email
 		req.userRole = existedUser.role
 		next()
-	} catch (e) {
-		return res.status(401).send({ message: 'Permission deny', data: e })
+	} catch (error) {
+		return res.status(401).send({
+			message: 'Permission deny',
+			data: error
+		})
 	}
 }
 

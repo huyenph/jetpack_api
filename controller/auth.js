@@ -6,7 +6,7 @@ const { User } = require('../model/user')
 const login = async (req, res) => {
   const { email, password } = req.body
   try {
-    const existedUser = await User.findOne({email})
+    const existedUser = await User.findOne({ email })
     if (!existedUser) {
       return res.status(401).send({
         message: 'Email or password is incorrect'
@@ -27,7 +27,10 @@ const login = async (req, res) => {
       userId: existedUser._id,
       email: existedUser.email
     })
-    res.status(200).send({ token })
+    res.status(200).send({
+      message: 'Success',
+      token
+    })
   } catch (error) {
     return res.status(500).send(error)
   }

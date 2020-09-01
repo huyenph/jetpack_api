@@ -11,6 +11,12 @@ const createUser = async (req, res) => {
       })
     }
     const { name, email, password, avatar, role } = req.body
+    const existedUser = await User.findOne({email})
+    if(existedUser) {
+      return res.status(401).send({
+        message: 'This email address is already being used!'
+      })
+    }
     // hash password
     const hashPassword = await bcryptjs.hash(password, 12)
     const user = User({
@@ -21,7 +27,10 @@ const createUser = async (req, res) => {
       role,
     })
     const newUser = await user.save()
-    res.status(201).send(newUser)
+    res.status(201).send({
+      message: 'Success',
+      data: newUser
+    })
   } catch (error) {
     return res.status(500).send(error)
   }
@@ -34,7 +43,10 @@ const getUserById = async (req, res) => {
     if (!user) {
       return res.status(404).send()
     }
-    return res.status(200).send(user)
+    return res.status(200).send({
+      message: 'Success',
+      data: user
+    })
   } catch (error) {
     return res.status(500).send(error)
   }
@@ -43,7 +55,10 @@ const getUserById = async (req, res) => {
 const getUsers = async (req, res) => {
   try {
     const users = await User.find()
-    return res.status(200).send(users)
+    return res.status(200).send({
+      message: 'Success',
+      data: users
+    })
   } catch (error) {
     res.status(500).send(error)
   }
@@ -56,7 +71,10 @@ const deleteUserById = async (req, res) => {
     if (!user) {
       return res.status(404).send()
     }
-    return res.status(200).send(user)
+    return res.status(200).send({
+      message: 'Success',
+      data: user
+    })
   } catch (error) {
     return res.status(500).send(error)
   }
@@ -84,7 +102,10 @@ const updateUserById = async (req, res) => {
     if (!user) {
       return res.status(404).send()
     }
-    return res.status(200).send(user)
+    return res.status(200).send({
+      message: 'Success',
+      data: user
+    })
   } catch (error) {
     return res.status(500).send(error)
   }

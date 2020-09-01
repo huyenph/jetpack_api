@@ -9,7 +9,7 @@ let jwtExpiredIn;
 
 switch (process.env.NODE_ENV) {
     case 'development':
-        mongoUri = process.env.MONGO_URI_DEVELOPMENT;
+        mongoUri = process.env.MONGO_URI_DEV;
         port = process.env.PORT;
         secretKey = process.env.JWT_SECRET_KEY_DEVELOPMENT;
         jwtExpiredIn = process.env.JWT_EXPIRED_DEVELOPMENT;
@@ -20,6 +20,10 @@ switch (process.env.NODE_ENV) {
         secretKey = process.env.JWT_SECRET_KEY_STAGING;
         jwtExpiredIn = process.env.JWT_EXPIRED_STAGING;
     default:
+        mongoUri = process.env.MONGO_URI_DEV;
+        port = process.env.PORT;
+        secretKey = process.env.JWT_SECRET_KEY_DEVELOPMENT;
+        jwtExpiredIn = process.env.JWT_EXPIRED_DEVELOPMENT;
         break;
 }
 

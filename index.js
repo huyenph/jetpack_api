@@ -2,7 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const config = require('./config')
-const userRoute = require('./route/user')
+const router = require('./route/user')
 
 console.log(process.env.NODE_ENV)
 console.log(process.env.NODE_ENV === 'development')
@@ -18,7 +18,7 @@ app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
     next();
 })
-// app.use('/users', userRoute)
+app.use('/users', router)
 
 mongoose.connect(config.mongoUri, {
     useNewUrlParser: true,
@@ -26,6 +26,7 @@ mongoose.connect(config.mongoUri, {
 }).then(() => {
     console.log('MOngoDB Connected')
     app.listen(port)
+    console.log('listen port: ' + port)
 }).catch((e) => {
     console.log(e)
 })

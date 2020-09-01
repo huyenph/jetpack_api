@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "description": "api for mobile",
   "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "debug": "nodemon index.js",
+    "start:development": "set NODE_ENV=development& node index.js",
+    "start:staging": "set NODE_ENV=staging& node index.js"
+  },
   "repository": "git@github.com:huyenph/jetpack_api.git",
   "author": "huyenpham96 <huyen.phamhoang96@gmail.com>",
   "license": "MIT",

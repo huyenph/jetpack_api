@@ -1,7 +1,7 @@
 const bcryptjs = require('bcryptjs')
 const { User, createUserSchema, updateUserSchema } = require('../model/user')
 
-const createUser = async (req, res) => {
+exports.createUser = async (req, res) => {
   try {
     const validationResult = createUserSchema.validate(req.body)
     if (validationResult.error) {
@@ -36,7 +36,7 @@ const createUser = async (req, res) => {
   }
 }
 
-const getUserById = async (req, res) => {
+exports.getUserById = async (req, res) => {
   try {
     const userId = req.params.id
     const user = await User.findById(userId)
@@ -52,7 +52,7 @@ const getUserById = async (req, res) => {
   }
 }
 
-const getUsers = async (req, res) => {
+exports.getUsers = async (req, res) => {
   try {
     const users = await User.find()
     return res.status(200).send({
@@ -64,7 +64,7 @@ const getUsers = async (req, res) => {
   }
 }
 
-const deleteUserById = async (req, res) => {
+exports.deleteUserById = async (req, res) => {
   try {
     const userId = req.params.id
     const user = await User.findByIdAndDelete(userId, { useFindAndModify: false })
@@ -80,7 +80,7 @@ const deleteUserById = async (req, res) => {
   }
 }
 
-const updateUserById = async (req, res) => {
+exports.updateUserById = async (req, res) => {
   try {
     const validationResult = updateUserSchema.validate()
     if (validationResult.error) {
@@ -121,11 +121,21 @@ const updateUserById = async (req, res) => {
   }
 }
 
-module.exports = {
-  createUser,
-  getUserById,
-  getUsers,
-  deleteUserById,
-  updateUserById,
+exports.uploadAvatar = async (req, res) => {
+  if (!req.file) {
+    return res.status(400).send({
+      message: 'Need an image for uploading'
+    })
+  }
+  try {
+    const user = await User.findById(req.userId)
+    user.avatar = req.file.filename
+    await user.save()
+    res.status(200).send({
+      message: 'Successs',
+      data: user
+    })
+  } catch (error) {
+    res.status(500).send(error)
+  }
 }
-

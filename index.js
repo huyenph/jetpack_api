@@ -11,6 +11,7 @@ console.log(config.mongoUri)
 const app = express()
 const port = process.env.port || config.port
 
+app.use(express.static('storage'))
 app.use(bodyParser.json())
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");

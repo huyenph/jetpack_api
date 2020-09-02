@@ -20,7 +20,7 @@ const userSchema = mongoose.Schema({
     }
 })
 
-const createUserSchema = joi.object({
+exports.createUserSchema = joi.object({
     name: joi.string().required().min(8).max(16),
     email: joi.string().email().required(),
     password: joi.string().required(),
@@ -28,12 +28,12 @@ const createUserSchema = joi.object({
     role: joi.array().required(),
 })
 
-const updateUserSchema = joi.object({
+exports.updateUserSchema = joi.object({
     name: joi.string().required().min(8).max(16),
     email: joi.string().email().required(),
     avatar: joi.string().uri(),
 })
 
-const User = mongoose.model('user', userSchema)
+exports.User = mongoose.model('user', userSchema)
 
-module.exports = { User, createUserSchema, updateUserSchema, }
+// module.exports = { User, createUserSchema, updateUserSchema, }

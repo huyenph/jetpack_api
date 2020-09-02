@@ -30,12 +30,12 @@ const uploadFile = multer({
   fileFilter: (req, file, cb) => {
     cb(null, true)
   },
-  limits: (req, file, cb) => {
-
+  limits: {
+    fileSize: 1000 * 1000,
   },
 })
 
-const upload = uploadFile.array('files', 5)
+const upload = uploadFile.single('file')
 
 // endpoint : /users/upload/avatar POST
 router.post('/upload/avatar',

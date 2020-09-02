@@ -122,14 +122,14 @@ exports.updateUserById = async (req, res) => {
 }
 
 exports.uploadAvatar = async (req, res) => {
-  if (!req.files[0]) {
+  if (!req.file) {
     return res.status(400).send({
       message: 'Need an image for uploading'
     })
   }
   try {
     const user = await User.findById(req.userId)
-    user.avatar = req.files[0].filename
+    user.avatar = req.file.filename
     await user.save()
     res.status(200).send({
       message: 'Successs',

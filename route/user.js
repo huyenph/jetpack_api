@@ -8,22 +8,48 @@ const router = express.Router()
 
 const uploadFile = multer({
   storage: multer.diskStorage({
-    destination: (req, file, callback) => {
-      callback(null, 'storage')
+    destination: (req, file, cb) => {
+      cb(null, 'storage')
     },
-    filename: (req, file, callback) => {
-      callback(null, file.originalname)
-    }
+    filename: (req, file, cb) => {
+      let allowedFile = {
+        'image/png': '.png',
+        'image/jpeg': '.jpeg',
+        'image/jpg': '.jpg'
+      }
+      if (allowedFile[file.mimetype] == undefined) {
+        cb(Error('Invalid file format'))
+      } else {
+        cb(
+          null,
+          file.fieldname + '-' + Date.now() + allowedFile[file.mimetype]
+        )
+      }
+    },
   }),
-  fileFilter: (req, file, callback) => {
-    callback(null, true)
-  }
+  fileFilter: (req, file, cb) => {
+    cb(null, true)
+  },
+  limits: (req, file, cb) => {
+
+  },
 })
+
+const upload = uploadFile.array('files', 5)
 
 // endpoint : /users/upload/avatar POST
 router.post('/upload/avatar',
   authenticate,
-  uploadFile.single('file'),
+  function (req, res, next) {
+    upload(req, res, function (error) {
+      if (error) {
+        return res.status(400).send({
+          message: error.message
+        })
+      }
+      next()
+    })
+  },
   userController.uploadAvatar
 )
 

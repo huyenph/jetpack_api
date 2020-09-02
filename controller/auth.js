@@ -4,6 +4,7 @@ const config = require('../config')
 const { User } = require('../model/user')
 
 exports.login = async (req, res) => {
+  console.log(req.headers.host)
   const { email, password } = req.body
   try {
     const existedUser = await User.findOne({ email })

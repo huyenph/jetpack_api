@@ -122,14 +122,14 @@ exports.updateUserById = async (req, res) => {
 }
 
 exports.uploadAvatar = async (req, res) => {
-  if (!req.file) {
+  if (!req.files[0]) {
     return res.status(400).send({
       message: 'Need an image for uploading'
     })
   }
   try {
     const user = await User.findById(req.userId)
-    user.avatar = req.file.path
+    user.avatar = req.files[0].filename
     await user.save()
     res.status(200).send({
       message: 'Successs',
@@ -139,13 +139,3 @@ exports.uploadAvatar = async (req, res) => {
     res.status(500).send(error)
   }
 }
-
-// module.exports = {
-//   createUser,
-//   getUserById,
-//   getUsers,
-//   deleteUserById,
-//   updateUserById,
-//   uploadAvatar,
-// }
-

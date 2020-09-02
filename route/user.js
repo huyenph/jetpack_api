@@ -21,7 +21,7 @@ const uploadFile = multer({
 })
 
 // endpoint : /users/upload/avatar POST
-router.post('/upload',
+router.post('/upload/avatar',
   authenticate,
   uploadFile.single('file'),
   userController.uploadAvatar

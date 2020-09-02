@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 const { User } = require('../model/user')
 const config = require('../config')
 
-const authenticate = async (req, res, next) => {
+exports.authenticate = async (req, res, next) => {
 	const tokenStr = req.get('Authorization')
 	if (!tokenStr) {
 		return res.status(400).send({ message: 'No token provider' })
@@ -26,7 +26,7 @@ const authenticate = async (req, res, next) => {
 	}
 }
 
-const authorize = accessRole => {
+exports.authorize = accessRole => {
 	return async (req, res, next) => {
 		try {
 			let canAccess = false
@@ -45,5 +45,5 @@ const authorize = accessRole => {
 	}
 }
 
-module.exports = { authenticate, authorize, }
+// module.exports = { authenticate, authorize, }
 

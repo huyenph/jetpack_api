@@ -3,7 +3,7 @@ const bcryptjs = require('bcryptjs')
 const config = require('../config')
 const { User } = require('../model/user')
 
-const login = async (req, res) => {
+exports.login = async (req, res) => {
   const { email, password } = req.body
   try {
     const existedUser = await User.findOne({ email })
@@ -43,4 +43,4 @@ const signToken = payload => {
   return token
 }
 
-module.exports = { login }
+// module.exports = { login }

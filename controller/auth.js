@@ -50,13 +50,13 @@ exports.login = async (req, res) => {
       message: 'Success',
       token
     })
-    transporter.sendMail(message, function (err, info) {
-      if (err) {
-        console.log(err)
-      } else {
-        console.log(info)
-      }
-    })
+    // transporter.sendMail(message, function (err, info) {
+    //   if (err) {
+    //     console.log(err)
+    //   } else {
+    //     console.log(info)
+    //   }
+    // })
   } catch (error) {
     return res.status(500).send(error)
   }

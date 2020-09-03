@@ -22,7 +22,6 @@ const message = {
 }
 
 exports.login = async (req, res) => {
-  console.log(req.headers.host)
   const { email, password } = req.body
   try {
     const existedUser = await User.findOne({ email })

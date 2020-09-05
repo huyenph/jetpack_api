@@ -37,7 +37,7 @@ const uploadFile = multer({
 
 const upload = uploadFile.single('file')
 
-// endpoint : /users/upload/avatar POST
+// endpoint : /user/upload/avatar POST
 router.post('/upload/avatar',
   authenticate,
   function (req, res, next) {
@@ -53,23 +53,23 @@ router.post('/upload/avatar',
   userController.uploadAvatar
 )
 
-// endpoint : /users/login POST
+// endpoint : /user/login POST
 router.post('/login', authController.login)
 
-// endpoint : /users POST
+// endpoint : /user POST
 router.post('/', userController.createUser)
 
-// endpoint : /users/id PATCH
+// endpoint : /user/id PATCH
 router.patch('/:id', authenticate, userController.updateUserById)
 
-// endpoint : /users/id GET
-router.get('/:id', authenticate, authorize(['admin']), userController.getUserById)
+// endpoint : /user/id GET
+router.get('/:id', authenticate, authorize(['0']), userController.getUserById)
 
-// endpoint : /users GET
-router.get('/', authenticate, authorize(['admin']), userController.getUsers)
+// endpoint : /user GET
+router.get('/', authenticate, authorize(['0']), userController.getUsers)
 
-// endpoint : /users/id DELETE
-router.delete('/:id', authenticate, authorize(['admin']), userController.deleteUserById)
+// endpoint : /user/id DELETE
+router.delete('/:id', authenticate, authorize(['0']), userController.deleteUserById)
 
 module.exports = router
 

@@ -4,22 +4,29 @@ const nodemailer = require('nodemailer')
 const config = require('../config')
 const { User } = require('../model/user')
 
-const transporter = nodemailer.createTransport({
-  host: 'smtp.mailtrap.io',
-  port: 2525,
-  auth: {
-    user: '906ac091b0de48',
-    pass: 'b3de767059efba',
-  },
-})
-
-const message = {
-  from: 'elonmusk@tesla.com', // Sender address
-  to: 'huyen.phamhoang96@email.com',         // List of recipients
-  subject: 'Design Your Model S | Tesla', // Subject line
-  text: 'Have the most fun you can in a car. Get your Tesla today!',
-  html: '<h1>Have the most fun you can in a car!</h1><p>Get your <b>Tesla</b> today!</p>',
-}
+// send email
+// const transporter = nodemailer.createTransport({
+//   host: 'smtp.mailtrap.io',
+//   port: 2525,
+//   auth: {
+//     user: '906ac091b0de48',
+//     pass: 'b3de767059efba',
+//   },
+// })
+// const message = {
+//   from: 'elonmusk@tesla.com', // Sender address
+//   to: 'huyen.phamhoang96@email.com',         // List of recipients
+//   subject: 'Design Your Model S | Tesla', // Subject line
+//   text: 'Have the most fun you can in a car. Get your Tesla today!',
+//   html: '<h1>Have the most fun you can in a car!</h1><p>Get your <b>Tesla</b> today!</p>',
+// }
+// transporter.sendMail(message, function (err, info) {
+//   if (err) {
+//     console.log(err)
+//   } else {
+//     console.log(info)
+//   }
+// })
 
 exports.login = async (req, res) => {
   const { email, password } = req.body
@@ -49,13 +56,6 @@ exports.login = async (req, res) => {
       message: 'Success',
       token
     })
-    // transporter.sendMail(message, function (err, info) {
-    //   if (err) {
-    //     console.log(err)
-    //   } else {
-    //     console.log(info)
-    //   }
-    // })
   } catch (error) {
     return res.status(500).send(error)
   }
@@ -67,5 +67,3 @@ const signToken = payload => {
   })
   return token
 }
-
-// module.exports = { login }

@@ -2,7 +2,8 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const config = require('./config')
-const router = require('./route/user')
+const userRouter = require('./route/user')
+const roleRouter = require('./route/role')
 
 console.log(process.env.NODE_ENV)
 console.log(process.env.NODE_ENV === 'development')
@@ -19,7 +20,8 @@ app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
     next();
 })
-app.use('/users', router)
+app.use('/jetpack/user', userRouter)
+app.use('/jetpack/role', roleRouter)
 
 mongoose.connect(config.mongoUri, {
     useNewUrlParser: true,

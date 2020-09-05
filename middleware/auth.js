@@ -17,6 +17,7 @@ exports.authenticate = async (req, res, next) => {
 		req.userId = existedUser._id
 		req.userEmail = existedUser.email
 		req.userRole = existedUser.role
+		console.log(existedUser.role)
 		next()
 	} catch (error) {
 		return res.status(401).send({
@@ -31,7 +32,7 @@ exports.authorize = accessRole => {
 		try {
 			let canAccess = false
 			req.userRole.forEach(role => {
-				if (accessRole.includes(role)) {
+				if (accessRole.includes(role.code)) {
 					canAccess = true
 				}
 			})
@@ -44,6 +45,3 @@ exports.authorize = accessRole => {
 		}
 	}
 }
-
-// module.exports = { authenticate, authorize, }
-

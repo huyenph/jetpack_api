@@ -20,7 +20,7 @@ exports.createRole = async (req, res) => {
     const newRole = await role.save()
     res.status(201).send({
       message: 'Success',
-      data: newRole
+      item: newRole
     })
   } catch (error) {
     return res.status(500).send(error)
@@ -32,7 +32,7 @@ exports.getRole = async (req, res) => {
     const roles = await Role.find()
     return res.status(200).send({
       message: 'Success',
-      data: roles
+      items: roles
     })
   } catch (error) {
     res.status(500).send(error)

@@ -35,6 +35,9 @@ exports.getRole = async (req, res) => {
       items: roles
     })
   } catch (error) {
-    res.status(500).send(error)
+    res.status(500).send({
+      message: 'Error',
+      code: 500
+    })
   }
 }

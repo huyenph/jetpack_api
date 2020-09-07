@@ -10,7 +10,7 @@ exports.createUser = async (req, res) => {
         data: validationResult.error.details
       })
     }
-    const { firstName, lastName, email, password, avatar } = req.body
+    const { first_name, last_name, email, password, avatar } = req.body
     const existedUser = await User.findOne({ email })
     if (existedUser) {
       return res.status(401).send({
@@ -21,8 +21,8 @@ exports.createUser = async (req, res) => {
     const hashPassword = await bcryptjs.hash(password, 12)
 
     const user = User({
-      firstName,
-      lastName,
+      first_name,
+      last_name,
       email,
       password: hashPassword,
       avatar,
@@ -31,10 +31,13 @@ exports.createUser = async (req, res) => {
     const newUser = await user.save()
     res.status(201).send({
       message: 'Success',
-      data: newUser
+      code: 201
     })
   } catch (error) {
-    return res.status(500).send(error)
+    return res.status(500).send({
+      message: 'Error',
+      code: 500
+    })
   }
 }
 
@@ -92,7 +95,7 @@ exports.updateUserById = async (req, res) => {
       })
     }
     const userId = req.params.id
-    const allowUpdateFields = ['firstName', 'lastName', 'email', 'avatar']
+    const allowUpdateFields = ['first_name', 'last_name', 'email', 'avatar']
     const updateFields = Object.keys(req.body)
     const { email } = req.body
     const existedUser = await User.findOne({ email })

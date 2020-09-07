@@ -2,10 +2,10 @@ const mongoose = require('mongoose')
 const joi = require('joi')
 
 const userSchema = mongoose.Schema({
-    firstName: {
+    first_name: {
         type: String
     },
-    lastName: {
+    last_name: {
         type: String
     },
     email: {
@@ -34,8 +34,8 @@ const userSchema = mongoose.Schema({
 })
 
 exports.createUserSchema = joi.object({
-    firstName: joi.string().required().min(4).max(16),
-    lastName: joi.string().required().min(4).max(16),
+    first_name: joi.string().required().min(4).max(16),
+    last_name: joi.string().required().min(4).max(16),
     email: joi.string().email().required(),
     password: joi.string().required(),
     avatar: joi.string(),
@@ -49,8 +49,8 @@ exports.createUserSchema = joi.object({
 })
 
 exports.updateUserSchema = joi.object({
-    firstName: joi.string().required().min(4).max(16),
-    lastName: joi.string().required().min(4).max(16),
+    first_name: joi.string().required().min(4).max(16),
+    last_name: joi.string().required().min(4).max(16),
     email: joi.string().email().required(),
     avatar: joi.string().uri(),
 })

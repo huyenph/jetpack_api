@@ -27,7 +27,7 @@ exports.createRole = async (req, res) => {
   }
 }
 
-exports.getRole = async (req, res) => {
+exports.getRole = async (req, res) => { 
   try {
     const roles = await Role.find()
     return res.status(200).send({

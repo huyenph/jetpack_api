@@ -5,16 +5,18 @@ exports.createUser = async (req, res) => {
   try {
     const validationResult = createUserSchema.validate(req.body)
     if (validationResult.error) {
-      return res.status(422).send({
+      return res.status(400).send({
+        code: 400,
         message: 'Validation fail',
-        data: validationResult.error.details
+        data: validationResult.error.details,
       })
     }
     const { first_name, last_name, email, password, avatar } = req.body
     const existedUser = await User.findOne({ email })
     if (existedUser) {
       return res.status(401).send({
-        message: 'This email address is already being used!'
+        code: 401,
+        message: 'This email address is already being used!',
       })
     }
     // hash password
@@ -28,15 +30,15 @@ exports.createUser = async (req, res) => {
       avatar,
       role: req.body.role,
     })
-    const newUser = await user.save()
+    await user.save()
     res.status(201).send({
+      code: 201,
       message: 'Success',
-      code: 201
     })
   } catch (error) {
     return res.status(500).send({
-      message: 'Error',
-      code: 500
+      code: 500,
+      message: error,
     })
   }
 }

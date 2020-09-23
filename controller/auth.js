@@ -34,6 +34,7 @@ exports.login = async (req, res) => {
     const existedUser = await User.findOne({ email })
     if (!existedUser) {
       return res.status(401).send({
+        code: 401,
         message: 'Email or password is incorrect'
       })
     }
@@ -43,6 +44,7 @@ exports.login = async (req, res) => {
     )
     if (!isCorrectPassword) {
       return res.status(401).send({
+        code: 401,
         message: 'Email or password is incorrect'
       })
     }
@@ -53,11 +55,15 @@ exports.login = async (req, res) => {
       email: existedUser.email
     })
     res.status(200).send({
+      code: 200,
       message: 'Success',
-      token
+      token,
     })
   } catch (error) {
-    return res.status(500).send(error)
+    return res.status(500).send({
+      code: 500,
+      message: error,
+    })
   }
 }
 
